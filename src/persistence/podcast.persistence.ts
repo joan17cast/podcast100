@@ -1,4 +1,6 @@
 import {
+  ListOfPodcastEpisodesModel,
+  listOfPodcastEpisodesSchema,
   ListOfPodcastPodcastModel,
   listOfPodcastSchema,
 } from "@/domain/podcast.domain";
@@ -14,7 +16,6 @@ export const getAllPodcast = async () => {
     const url = new URL(
       `${envUrl}/us/rss/toppodcasts/limit=100/genre=1310/json`,
     );
-
 
     const response = await axios.get(url.href);
 
@@ -37,7 +38,51 @@ export const useGetAllPodcast = () => {
       return getAllPodcast();
     },
     retry: false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
 };
 
+// ** GET Podcast by ID
+
+export const getPodcastById = async (podcastId: string) => {
+  try {
+    const envUrl = import.meta.env.VITE_CUSTOM_API_URL;
+
+    const url = new URL(`${envUrl}/lookup`);
+    url.searchParams.append("id", podcastId);
+    url.searchParams.append("media", "podcast");
+    url.searchParams.append("entity", "podcastEpisode");
+    url.searchParams.append("limit", "20");
+    const response = await axios.get(
+      "https://api.allorigins.win/raw?url=" + url.href,
+      {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+        },
+      },
+    );
+    console.log(response.data);
+    const checkedResponse = listOfPodcastEpisodesSchema.safeParse(
+      response.data,
+    );
+
+    if (checkedResponse.success) {
+      return checkedResponse.data;
+    }
+
+    return Promise.reject(console.error(checkedResponse.error));
+  } catch (error) {
+    return Promise.reject(console.error(error));
+  }
+};
+
+export const useGetPodcastById = (podcastId: string) => {
+  return useQuery<ListOfPodcastEpisodesModel, void>({
+    queryKey: ["getPodcastById", podcastId],
+    queryFn: async () => {
+      return getPodcastById(podcastId);
+    },
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+};
