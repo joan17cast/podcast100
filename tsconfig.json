@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "composite": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "target": "ESNext",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
