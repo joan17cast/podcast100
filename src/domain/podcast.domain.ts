@@ -144,25 +144,29 @@ export const entrySchema = z.array(
 );
 
 export type EntryModel = z.infer<typeof entrySchema>;
-export const podcastSchema = z.object({
-  author: authorSchema,
-  entry: entrySchema,
-  updated: z.object({ label: z.string() }),
-  rights: z.object({ label: z.string() }),
-  title: z.object({ label: z.string() }),
-  icon: z.object({ label: z.string() }),
-  link: z.array(
-    z.union([
-      z.object({
-        attributes: z.object({
-          rel: z.string(),
-          type: z.string(),
-          href: z.string(),
+export const listOfPodcastSchema = z.object({
+  feed: z.object({
+    author: authorSchema,
+    entry: entrySchema,
+    updated: z.object({ label: z.string() }),
+    rights: z.object({ label: z.string() }),
+    title: z.object({ label: z.string() }),
+    icon: z.object({ label: z.string() }),
+    link: z.array(
+      z.union([
+        z.object({
+          attributes: z.object({
+            rel: z.string(),
+            type: z.string(),
+            href: z.string(),
+          }),
         }),
-      }),
-      z.object({ attributes: z.object({ rel: z.string(), href: z.string() }) }),
-    ]),
-  ),
-  id: z.object({ label: z.string() }),
+        z.object({
+          attributes: z.object({ rel: z.string(), href: z.string() }),
+        }),
+      ]),
+    ),
+    id: z.object({ label: z.string() }),
+  }),
 });
-export type PodcastModel = z.infer<typeof podcastSchema>;
+export type ListOfPodcastPodcastModel = z.infer<typeof listOfPodcastSchema>;
