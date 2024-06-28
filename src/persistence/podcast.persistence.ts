@@ -5,21 +5,16 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-interface SearchParams {
-  name?: string;
-}
-
 // ** GET ALL Podcast
 
-export const getAllPodcast = async (searchParams?: SearchParams) => {
+export const getAllPodcast = async () => {
   try {
     const envUrl = import.meta.env.VITE_CUSTOM_API_URL;
 
     const url = new URL(
       `${envUrl}/us/rss/toppodcasts/limit=100/genre=1310/json`,
     );
-    searchParams?.name &&
-      url.searchParams.append("page", searchParams.name.toString());
+
 
     const response = await axios.get(url.href);
 
@@ -35,9 +30,9 @@ export const getAllPodcast = async (searchParams?: SearchParams) => {
   }
 };
 
-export const useGetAllPodcast = (searchParams?: SearchParams) => {
+export const useGetAllPodcast = () => {
   return useQuery<ListOfPodcastPodcastModel, void>({
-    queryKey: ["getAllPodcast", searchParams],
+    queryKey: ["getAllPodcast"],
     queryFn: async () => {
       return getAllPodcast();
     },
@@ -45,3 +40,4 @@ export const useGetAllPodcast = (searchParams?: SearchParams) => {
     refetchOnWindowFocus: false
   });
 };
+
