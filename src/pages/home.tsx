@@ -1,13 +1,9 @@
-
-
+import { useGetAllPodcast } from "@/persistence/podcast.persistence";
 
 function Home() {
-
-  return (
-    <>
-      Home
-    </>
-  );
+  const { status, error, data } = useGetAllPodcast();
+  console.log({ status, error, data });
+  return <>Home</>;
 }
 
 export default Home;
