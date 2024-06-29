@@ -16,6 +16,7 @@ function Home() {
               {listOfPodcast.map((podcast) => (
                 <PodcastCard
                   key={podcast.id.attributes["im:id"]}
+                  id={podcast.id.attributes["im:id"]}
                   image={podcast["im:image"][1]?.label}
                   podcastName={podcast["im:name"].label}
                   artist={podcast["im:artist"].label}

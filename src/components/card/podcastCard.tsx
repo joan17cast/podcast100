@@ -1,12 +1,23 @@
+import { useNavigate } from "@tanstack/react-router";
+
 interface PodcastCardProps {
   image?: string;
   podcastName: string;
   artist: string;
+  id: string;
 }
 
-function PodcastCard({ image, podcastName, artist }: PodcastCardProps) {
+function PodcastCard({ image, podcastName, artist, id }: PodcastCardProps) {
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center rounded-lg border p-4 shadow-md">
+    <button
+      className="flex flex-col items-center rounded-lg border p-4 shadow-md transition-all duration-200 ease-in-out hover:scale-[103%]"
+      onClick={() =>
+        navigate({
+          to: `podcast/${id}`,
+        }).catch(() => console.error(`Error navigating to podcast: ${id}`))
+      }
+    >
       <img
         // TODO Add a fallback image if it's not available
         src={image ?? ""}
@@ -17,7 +28,7 @@ function PodcastCard({ image, podcastName, artist }: PodcastCardProps) {
         {podcastName}
       </h1>
       <p className="w-full truncate text-center font-light">{`Author: ${artist}`}</p>
-    </div>
+    </button>
   );
 }
 
