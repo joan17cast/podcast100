@@ -4,6 +4,7 @@ import {
   ListOfPodcastPodcastModel,
   listOfPodcastSchema,
 } from "@/domain/podcast.domain";
+import { customEncodeURIComponent } from "@/utils/helpers";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -54,12 +55,7 @@ export const getPodcastById = async (podcastId: string) => {
     url.searchParams.append("entity", "podcastEpisode");
     url.searchParams.append("limit", "20");
     const response = await axios.get(
-      "https://api.allorigins.win/raw?url=" + url.href,
-      {
-        headers: {
-          Accept: "application/json, text/plain, */*",
-        },
-      },
+      `https://api.allorigins.win/raw?url=${customEncodeURIComponent(url.href)}`,
     );
     console.log(response.data);
     const checkedResponse = listOfPodcastEpisodesSchema.safeParse(
@@ -70,7 +66,7 @@ export const getPodcastById = async (podcastId: string) => {
       return checkedResponse.data;
     }
 
-    return Promise.reject(console.error(checkedResponse.error));
+    return Promise.reject(console.error(checkedResponse.error.stack));
   } catch (error) {
     return Promise.reject(console.error(error));
   }
