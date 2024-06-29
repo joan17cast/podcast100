@@ -45,7 +45,7 @@ export const useGetAllPodcast = () => {
 
 // ** GET Podcast by ID
 
-export const getPodcastById = async (podcastId: string) => {
+export const getPodcastEpisodesById = async (podcastId: string) => {
   try {
     const envUrl = import.meta.env.VITE_CUSTOM_API_URL;
 
@@ -53,7 +53,7 @@ export const getPodcastById = async (podcastId: string) => {
     url.searchParams.append("id", podcastId);
     url.searchParams.append("media", "podcast");
     url.searchParams.append("entity", "podcastEpisode");
-    url.searchParams.append("limit", "20");
+
     const response = await axios.get(
       `https://api.allorigins.win/raw?url=${customEncodeURIComponent(url.href)}`,
     );
@@ -71,11 +71,11 @@ export const getPodcastById = async (podcastId: string) => {
   }
 };
 
-export const useGetPodcastById = (podcastId: string) => {
+export const useGetPodcastEpisodesById = (podcastId: string) => {
   return useQuery<ListOfPodcastEpisodesModel, void>({
-    queryKey: ["getPodcastById", podcastId],
+    queryKey: ["getPodcastEpisodesById", podcastId],
     queryFn: async () => {
-      return getPodcastById(podcastId);
+      return getPodcastEpisodesById(podcastId);
     },
     retry: false,
     refetchOnWindowFocus: false,
