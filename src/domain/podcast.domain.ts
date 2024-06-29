@@ -171,74 +171,51 @@ export const listOfPodcastSchema = z.object({
 });
 export type ListOfPodcastPodcastModel = z.infer<typeof listOfPodcastSchema>;
 
+export const podcastEpisodeSchema = z.union([
+  z
+    .object({
+      wrapperType: z.string(),
+    })
+    .passthrough(),
+  z
+    .object({
+      episodeFileExtension: z.string(),
+      episodeContentType: z.string(),
+      artworkUrl160: z.string(),
+      artworkUrl600: z.string(),
+      feedUrl: z.string(),
+      artistIds: z.array(z.number()),
+      trackTimeMillis: z.number(),
+      genres: z.array(z.object({ name: z.string(), id: z.string() })),
+      episodeGuid: z.string(),
+      description: z.string(),
+      closedCaptioning: z.string(),
+      collectionId: z.number(),
+      collectionName: z.string(),
+      releaseDate: z.string(),
+      collectionViewUrl: z.string(),
+      shortDescription: z.string(),
+      trackId: z.number(),
+      trackName: z.string(),
+      episodeUrl: z.string(),
+      trackViewUrl: z.string(),
+      artworkUrl60: z.string(),
+      artistViewUrl: z.string(),
+      previewUrl: z.string(),
+      country: z.string(),
+      kind: z.string(),
+      wrapperType: z.string(),
+    })
+    .passthrough(),
+]);
+
+export type PodcastEpisodeModel = z.infer<typeof podcastEpisodeSchema>;
+
 export const listOfPodcastEpisodesSchema = z.object({
   resultCount: z.number(),
-  results: z.array(
-    z.union([
-      z.object({
-        wrapperType: z.string(),
-        kind: z.string(),
-        artistId: z.number(),
-        collectionId: z.number(),
-        trackId: z.number(),
-        artistName: z.string(),
-        collectionName: z.string(),
-        trackName: z.string(),
-        collectionCensoredName: z.string(),
-        trackCensoredName: z.string(),
-        artistViewUrl: z.string(),
-        collectionViewUrl: z.string(),
-        feedUrl: z.string(),
-        trackViewUrl: z.string(),
-        artworkUrl30: z.string(),
-        artworkUrl60: z.string(),
-        artworkUrl100: z.string(),
-        collectionPrice: z.number(),
-        trackPrice: z.number(),
-        collectionHdPrice: z.number(),
-        releaseDate: z.string(),
-        collectionExplicitness: z.string(),
-        trackExplicitness: z.string(),
-        trackCount: z.number(),
-        trackTimeMillis: z.number(),
-        country: z.string(),
-        currency: z.string(),
-        primaryGenreName: z.string(),
-        artworkUrl600: z.string(),
-        genreIds: z.array(z.string()),
-        genres: z.array(z.string()),
-      }),
-      z.object({
-        episodeFileExtension: z.string(),
-        episodeContentType: z.string(),
-        artworkUrl160: z.string(),
-        artworkUrl600: z.string(),
-        feedUrl: z.string(),
-        artistIds: z.array(z.number()),
-        trackTimeMillis: z.number(),
-        genres: z.array(z.object({ name: z.string(), id: z.string() })),
-        episodeGuid: z.string(),
-        description: z.string(),
-        closedCaptioning: z.string(),
-        collectionId: z.number(),
-        collectionName: z.string(),
-        releaseDate: z.string(),
-        collectionViewUrl: z.string(),
-        shortDescription: z.string(),
-        trackId: z.number(),
-        trackName: z.string(),
-        episodeUrl: z.string(),
-        trackViewUrl: z.string(),
-        artworkUrl60: z.string(),
-        artistViewUrl: z.string(),
-        previewUrl: z.string(),
-        country: z.string(),
-        kind: z.string(),
-        wrapperType: z.string(),
-      }),
-    ]),
-  ),
+  results: z.array(podcastEpisodeSchema),
 });
+
 export type ListOfPodcastEpisodesModel = z.infer<
   typeof listOfPodcastEpisodesSchema
 >;

@@ -57,7 +57,6 @@ export const getPodcastById = async (podcastId: string) => {
     const response = await axios.get(
       `https://api.allorigins.win/raw?url=${customEncodeURIComponent(url.href)}`,
     );
-    console.log(response.data);
     const checkedResponse = listOfPodcastEpisodesSchema.safeParse(
       response.data,
     );
