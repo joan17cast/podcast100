@@ -1,3 +1,4 @@
+import Episode from "@/pages/episode";
 import Home from "@/pages/home";
 import NotFound from "@/pages/notFound";
 import Podcast from "@/pages/podcast";
@@ -20,7 +21,11 @@ const podcastRoute = createRoute({
   path: "/podcast/$podcastId",
   component: Podcast,
 });
-
+const episodeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/podcast/$podcastId/episode/$episodeId",
+  component: Episode,
+});
 const notFoundRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "$",
@@ -30,6 +35,7 @@ const notFoundRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   homeRoute,
   podcastRoute,
+  episodeRoute,
   notFoundRoute,
 ]);
 
