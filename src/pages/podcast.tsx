@@ -1,4 +1,5 @@
 import PodcastDescriptionCard from "@/components/card/podcastDescriptionCard";
+import { Layout } from "@/components/layout";
 import { Table } from "@/components/table";
 import { PodcastEpisodeModel } from "@/domain/podcast.domain";
 import { useGetPodcastEpisodesById } from "@/persistence/podcast.persistence";
@@ -15,13 +16,12 @@ function Podcast() {
     .with({ status: "pending" }, () => <div>Loading...</div>)
     .with({ status: "error" }, () => <div>Error</div>)
     .with({ status: "success" }, (fetchData) => {
-      const listOfEpisodes =
-        fetchData.data.results.filter(
-          (episode): episode is PodcastEpisodeModel =>
-            episode.wrapperType === "podcastEpisode",
-        );
+      const listOfEpisodes = fetchData.data.results.filter(
+        (episode): episode is PodcastEpisodeModel =>
+          episode.wrapperType === "podcastEpisode",
+      );
       return (
-        <>
+        <Layout>
           <div className="flex flex-row gap-4 p-10">
             <PodcastDescriptionCard podcastId={podcastId} />
             <div className="flex w-full flex-col gap-4">
@@ -31,7 +31,7 @@ function Podcast() {
               <Table listOfEpisodes={listOfEpisodes} podcastId={podcastId} />
             </div>
           </div>
-        </>
+        </Layout>
       );
     })
     .exhaustive();

@@ -1,4 +1,5 @@
 import { PodcastCard } from "@/components/card";
+import { Layout } from "@/components/layout";
 import { useGetAllPodcast } from "@/persistence/podcast.persistence";
 import { match } from "ts-pattern";
 
@@ -10,7 +11,7 @@ function Home() {
     .with({ status: "success" }, (fetchData) => {
       const listOfPodcast = fetchData.data.feed.entry;
       return (
-        <>
+        <Layout>
           <div className="flex w-full items-center justify-center p-4">
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {listOfPodcast.map((podcast) => (
@@ -24,7 +25,7 @@ function Home() {
               ))}
             </section>
           </div>
-        </>
+        </Layout>
       );
     })
     .exhaustive();

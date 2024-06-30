@@ -1,4 +1,5 @@
 import PodcastDescriptionCard from "@/components/card/podcastDescriptionCard";
+import { Layout } from "@/components/layout";
 import { PodcastEpisodeModel } from "@/domain/podcast.domain";
 import { useGetPodcastEpisodesById } from "@/persistence/podcast.persistence";
 import { useParams } from "@tanstack/react-router";
@@ -29,7 +30,7 @@ function Episode() {
       const sanitizedDescription = DOMPurify.sanitize(episodeInfo.description);
 
       return (
-        <>
+        <Layout>
           <div className="flex flex-row gap-4 p-10">
             <PodcastDescriptionCard podcastId={podcastId} />
             <section className="flex h-fit w-full flex-col gap-4 rounded-md px-4 py-2 shadow-md ring-1 ring-gray-200">
@@ -42,7 +43,7 @@ function Episode() {
               </audio>
             </section>
           </div>
-        </>
+        </Layout>
       );
     })
     .exhaustive();
