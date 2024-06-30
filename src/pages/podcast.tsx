@@ -15,20 +15,20 @@ function Podcast() {
     .with({ status: "pending" }, () => <div>Loading...</div>)
     .with({ status: "error" }, () => <div>Error</div>)
     .with({ status: "success" }, (fetchData) => {
-      const listOfEpisodes: PodcastEpisodeModel[] =
+      const listOfEpisodes =
         fetchData.data.results.filter(
-          (e) => e.wrapperType === "podcastEpisode",
+          (episode): episode is PodcastEpisodeModel =>
+            episode.wrapperType === "podcastEpisode",
         );
-      fetchData.data.results.filter((e) => e.wrapperType === "podcastEpisode");
       return (
         <>
           <div className="flex flex-row gap-4 p-10">
-            <PodcastDescriptionCard id={podcastId} />
+            <PodcastDescriptionCard podcastId={podcastId} />
             <div className="flex w-full flex-col gap-4">
               <section className="w-full rounded-md px-4 py-2 shadow-md ring-1 ring-gray-200">
                 <h2 className="text-lg font-bold">{`Episodes: ${listOfEpisodes.length}`}</h2>
               </section>
-              <Table listOfEpisodes={listOfEpisodes} />
+              <Table listOfEpisodes={listOfEpisodes} podcastId={podcastId} />
             </div>
           </div>
         </>

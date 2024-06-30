@@ -171,7 +171,7 @@ export const listOfPodcastSchema = z.object({
 });
 export type ListOfPodcastPodcastModel = z.infer<typeof listOfPodcastSchema>;
 
-export const podcastEpisodeSchema = z.union([
+export const unionPodcastEpisodeSchema = z.union([
   z
     .object({
       wrapperType: z.string(),
@@ -208,12 +208,43 @@ export const podcastEpisodeSchema = z.union([
     })
     .passthrough(),
 ]);
+export type UnionPodcastEpisodeModel = z.infer<typeof unionPodcastEpisodeSchema>;
+const podcastEpisodeSchema = z
+  .object({
+    episodeFileExtension: z.string(),
+    episodeContentType: z.string(),
+    artworkUrl160: z.string(),
+    artworkUrl600: z.string(),
+    feedUrl: z.string(),
+    artistIds: z.array(z.number()),
+    trackTimeMillis: z.number(),
+    genres: z.array(z.object({ name: z.string(), id: z.string() })),
+    episodeGuid: z.string(),
+    description: z.string(),
+    closedCaptioning: z.string(),
+    collectionId: z.number(),
+    collectionName: z.string(),
+    releaseDate: z.string(),
+    collectionViewUrl: z.string(),
+    shortDescription: z.string(),
+    trackId: z.number(),
+    trackName: z.string(),
+    episodeUrl: z.string(),
+    trackViewUrl: z.string(),
+    artworkUrl60: z.string(),
+    artistViewUrl: z.string(),
+    previewUrl: z.string(),
+    country: z.string(),
+    kind: z.string(),
+    wrapperType: z.string(),
+  })
+  .passthrough();
 
 export type PodcastEpisodeModel = z.infer<typeof podcastEpisodeSchema>;
 
 export const listOfPodcastEpisodesSchema = z.object({
   resultCount: z.number(),
-  results: z.array(podcastEpisodeSchema),
+  results: z.array(unionPodcastEpisodeSchema),
 });
 
 export type ListOfPodcastEpisodesModel = z.infer<

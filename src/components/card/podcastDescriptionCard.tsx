@@ -2,17 +2,17 @@ import { useGetAllPodcast } from "@/persistence/podcast.persistence";
 import { match } from "ts-pattern";
 
 interface PodcastDescriptionCardProps {
-  id: string;
+  podcastId: string;
 }
 
-function PodcastDescriptionCard({ id }: PodcastDescriptionCardProps) {
+function PodcastDescriptionCard({ podcastId }: PodcastDescriptionCardProps) {
   const getAllPodcast = useGetAllPodcast();
   return match(getAllPodcast)
     .with({ status: "pending" }, () => <div>Loading...</div>)
     .with({ status: "error" }, () => <div>Error</div>)
     .with({ status: "success" }, (fetchData) => {
       const podcast = fetchData.data.feed.entry.find(
-        (e) => e.id.attributes["im:id"] === id,
+        (e) => e.id.attributes["im:id"] === podcastId,
       );
       if (podcast !== undefined) {
         return (

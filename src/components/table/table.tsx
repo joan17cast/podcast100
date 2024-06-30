@@ -3,9 +3,10 @@ import { PodcastEpisodeModel } from "@/domain/podcast.domain";
 
 interface TableProps {
   listOfEpisodes: PodcastEpisodeModel[];
+  podcastId: number;
 }
 
-function Table({ listOfEpisodes }: TableProps) {
+function Table({ listOfEpisodes, podcastId }: TableProps) {
   return (
     <div className="w-full rounded-md px-4 shadow-md ring-1 ring-gray-200">
       <table className="w-full">
@@ -17,6 +18,8 @@ function Table({ listOfEpisodes }: TableProps) {
               title={e.trackName}
               releaseDate={e.releaseDate}
               duration={e.trackTimeMillis}
+              episodeId={e.trackId}
+              podcastId={podcastId}
             />
           ))}
         </tbody>
