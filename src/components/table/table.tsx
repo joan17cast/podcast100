@@ -17,7 +17,7 @@ function Table({ listOfEpisodes, podcastId }: TableProps) {
               key={e.trackId}
               title={e.trackName}
               releaseDate={e.releaseDate}
-              duration={e.trackTimeMillis}
+              duration={e.trackTimeMillis ?? 0}
               episodeId={e.trackId}
               podcastId={podcastId}
             />
