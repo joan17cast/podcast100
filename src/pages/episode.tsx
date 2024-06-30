@@ -23,7 +23,6 @@ function Episode() {
       const episodeInfo = listOfEpisodes.find(
         (episode) => episode.trackId === parseInt(episodeId),
       );
-      console.log(episodeInfo);
       if (episodeInfo === undefined) return <div>Episode not found</div>;
 
       // Sanitize the description HTML content
