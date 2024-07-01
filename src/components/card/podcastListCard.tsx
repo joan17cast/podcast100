@@ -27,14 +27,14 @@ function PodcastList() {
       });
       return (
         <div className="flex w-full flex-col items-center justify-center gap-4 p-4">
-          <div className="flex items-center gap-4">
+          <div className="flex w-full items-center justify-end gap-4">
+            <h4 className="w-fit rounded-lg bg-cyan-600 px-1 font-bold text-white">
+              {listOfPodcastFiltered.length}
+            </h4>
             <TextFieldBase
               value={paramToSearch}
               onChange={(text) => setParamToSearch(text)}
             />
-            <h4 className="w-full">
-              {listOfPodcastFiltered.length} podcast(s) found
-            </h4>
           </div>
           <section className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {listOfPodcastFiltered.map((podcast) => (
