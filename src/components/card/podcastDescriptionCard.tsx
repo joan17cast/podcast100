@@ -1,4 +1,5 @@
 import { useGetAllPodcast } from "@/persistence/podcast.persistence";
+import { Link } from "@tanstack/react-router";
 import { match } from "ts-pattern";
 
 interface PodcastDescriptionCardProps {
@@ -17,17 +18,22 @@ function PodcastDescriptionCard({ podcastId }: PodcastDescriptionCardProps) {
       if (podcast !== undefined) {
         return (
           <div className="flex h-fit max-w-80 flex-col items-center gap-4 rounded-lg border p-4 shadow-md">
-            <img
-              // TODO Add a fallback image if it's not available
-              src={podcast["im:image"][2]?.label ?? ""}
-              alt={podcast["im:name"].label}
-              className="h-40 w-40 rounded-md object-cover"
-            />
+            <Link to={`/podcast/${podcastId}`}>
+              <img
+                // TODO Add a fallback image if it's not available
+                src={podcast["im:image"][2]?.label ?? ""}
+                alt={podcast["im:name"].label}
+                className="h-40 w-40 rounded-md object-cover"
+              />
+            </Link>
             <hr className="w-full rounded-md border border-gray-300" />
             <div className="w-full">
-              <h1 className="w-full truncate text-left font-semibold">
+              <Link
+                to={`/podcast/${podcastId}`}
+                className="w-full truncate text-left font-semibold"
+              >
                 {podcast["im:name"].label}
-              </h1>
+              </Link>
               <p className="w-full truncate text-left font-light">{`by ${podcast["im:artist"].label}`}</p>
             </div>
             <hr className="w-full rounded-md border border-gray-300" />
