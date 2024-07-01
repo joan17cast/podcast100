@@ -1,3 +1,4 @@
+import { LoadingCircle } from "@/components/loading";
 import { useGetAllPodcast } from "@/persistence/podcast.persistence";
 import { Link } from "@tanstack/react-router";
 import { match } from "ts-pattern";
@@ -9,7 +10,11 @@ interface PodcastDescriptionCardProps {
 function PodcastDescriptionCard({ podcastId }: PodcastDescriptionCardProps) {
   const getAllPodcast = useGetAllPodcast();
   return match(getAllPodcast)
-    .with({ status: "pending" }, () => <div>Loading...</div>)
+    .with({ status: "pending" }, () => (
+      <div className="flex h-full w-full items-center justify-center">
+        <LoadingCircle />.
+      </div>
+    ))
     .with({ status: "error" }, () => <div>Error</div>)
     .with({ status: "success" }, (fetchData) => {
       const podcast = fetchData.data.feed.entry.find(
