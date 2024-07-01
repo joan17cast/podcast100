@@ -38,8 +38,6 @@ export const useGetAllPodcast = () => {
     queryFn: async () => {
       return getAllPodcast();
     },
-    retry: false,
-    refetchOnWindowFocus: false,
   });
 };
 
@@ -77,7 +75,5 @@ export const useGetPodcastEpisodesById = (podcastId: string) => {
     queryFn: async () => {
       return getPodcastEpisodesById(podcastId);
     },
-    retry: false,
-    refetchOnWindowFocus: false,
   });
 };
